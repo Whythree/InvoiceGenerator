@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Invoice generator</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<main>
+    <h1>Invoice Generator</h1>
+    <form action="http://127.0.0.1:5000/create-invoice" method="POST" id="invoice-form">
+
+        <label for="customer">Full name of Customer</label>
+        <input id="customer" type="text">
+
+        <div id="positions-container">
+            <label for="commission_type">Commission Type</label>
+            <input list="commission_type_list" name="commission_type" id="commission_type"
+                   placeholder="Commission Type">
+            <datalist id="commission_type_list">
+                <option value="Portrait">Portrait</option>
+                <option value="Bust">Bust</option>
+                <option value="Full Body">Full Body</option>
+            </datalist>
+
+            <label for="price">Preis</label>
+            <input type="number" id="price" name="price" placeholder="75">
+            <label for="quantity">Menge</label>
+            <input type="number" step="1" id="quantity" name="quantity" placeholder="1">
+        </div>
+        <button type="button" id="new_pos_btn">Add new position</button>
+
+        <a href="./preview" target="_blank">View Preview</a>
+        <button type="submit">Generate Invoice</button>
+    </form>
+</main>
+
+<template id="invoice-position-template">
+    <div class="position-group">
+        <label>Commission Type</label>
+        <input list="commission_type_list" name="commission_type[]" placeholder="Commission Type">
+        <label>Preis</label>
+        <input type="number" name="price[]" placeholder="75">
+        <label>Menge</label>
+        <input type="number" step="1" name="quantity[]" placeholder="1">
+        <button type="button">Delete Entry</button>
+    </div>
+</template>
+
+<script src="{{ url_for("static",filename="index.js") }}"></script>
+</body>
+</html>

@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route("/")
 #Von Home muss eine JSON an /create-invoice gesendet werden mit einer Form.
 def home():
-    pass
+    return render_template("home.html")
 
 
 @app.post("/create-invoice")
