@@ -15,6 +15,9 @@ def home():
 
 @app.post("/create-invoice")
 def create_invoice():
+    request_data = request.get_json()
+    # ToDo Feed request data to template and build pdf
+    print(f"Submitted Data: {request_data}")
     return "Hello World"
 
     # today = datetime.today().strftime("%B %-d, %Y")

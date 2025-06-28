@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Handle form submit
         const invoiceForm = document.getElementById("invoice-form");
-        invoiceForm.addEventListener("submit", (e) => {
+        invoiceForm.addEventListener("submit", async (e) => {
             e.preventDefault()
 
             const data = []
@@ -38,26 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 const quantityInputValue = group.querySelector('[name=quantity]').value;
 
                 const groupData = {
-                    "Commission Type" : commissionTypeInputValue,
-                    "Price" : priceInputValue,
-                    "Quantity" : quantityInputValue,
+                    "Commission Type": commissionTypeInputValue,
+                    "Price": priceInputValue,
+                    "Quantity": quantityInputValue,
                 }
 
                 data.push(groupData);
             })
 
-            fetch("/create-invoice"), {
-                method: 'POST',
-                body: JSON.stringify(data),
+
+            const submit = await fetch("/create-invoice", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
 
+            })
             console.log(data)
-
-
-
 
         })
 
