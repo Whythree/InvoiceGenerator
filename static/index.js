@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if ("content" in document.createElement("template")) {
         const addButton = document.getElementById("new_pos_btn");
 
+        // Handle Template Cloning
         addButton.addEventListener("click", () => {
             const template = document.getElementById("invoice-position-template");
             const clone = template.content.cloneNode(true);
@@ -20,8 +21,47 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             invoiceForm.insertBefore(clone, addButton);
 
+        })
+
+        // Handle form submit
+        const invoiceForm = document.getElementById("invoice-form");
+        invoiceForm.addEventListener("submit", (e) => {
+            e.preventDefault()
+
+            const data = []
+
+            const positionGroup = document.querySelectorAll('.position-group');
+            positionGroup.forEach(group => {
+
+                const commissionTypeInputValue = group.querySelector('[name=commission_type]').value;
+                const priceInputValue = group.querySelector('[name=price]').value;
+                const quantityInputValue = group.querySelector('[name=quantity]').value;
+
+                const groupData = {
+                    "Commission Type" : commissionTypeInputValue,
+                    "Price" : priceInputValue,
+                    "Quantity" : quantityInputValue,
+                }
+
+                data.push(groupData);
+            })
+
+            fetch("/create-invoice"), {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            console.log(data)
+
+
+
 
         })
+
+
     } else {
         alert("Please enable Javascript for this app to function correctly");
     }
