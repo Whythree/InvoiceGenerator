@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             invoiceForm.insertBefore(clone, addButton);
 
         })
-
+        // ToDo: Aufräumen : Seperation of Concerns. Jede Funktion hat exakt eine Aufgabe
         // Handle form submit
         const invoiceForm = document.getElementById("invoice-form");
         invoiceForm.addEventListener("submit", async (e) => {
@@ -55,6 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(data)
 
             })
+                .then(response => response.blob())
+                .then(blob => {
+                    const blobURL = URL.createObjectURL(blob);
+                    window.open(blobURL);
+                })
+                .catch(error => {
+                    console.error('Error fetching PDF:', error);
+                });
             console.log(data)
 
         })

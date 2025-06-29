@@ -1,4 +1,5 @@
 from datetime import datetime
+from functools import reduce
 from weasyprint import HTML
 import flask
 import os
@@ -18,15 +19,25 @@ def create_invoice():
     request_data = request.get_json()
     # ToDo Feed request data to template and build pdf
     print(f"Submitted Data: {request_data}")
-    return "Hello World"
 
-    # today = datetime.today().strftime("%B %-d, %Y")
-    # rendered_template = render_template('invoice.html',
-    #                                     date=today)
-    #
-    # html = HTML(string=rendered_template)
-    # rendered_pdf = html.write_pdf('./static/invoice.pdf')
-    # return send_file("./static/invoice.pdf")
+
+    # Sum nimmt eine Liste
+    # Ich brauche also eine Liste - Ich habe ja schon eine Liste an Dictionaries
+    total_sum = 0
+
+
+    print(f"Total Sum: {total_sum}")
+
+
+    today = datetime.today().strftime("%B %-d, %Y")
+    rendered_template = render_template('invoice.html',
+                                        date=today,
+                                        items = request_data
+                                        )
+
+    html = HTML(string=rendered_template)
+    rendered_pdf = html.write_pdf('./static/invoice.pdf')
+    return send_file("./static/invoice.pdf",None,True)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
